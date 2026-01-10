@@ -4,11 +4,12 @@ A Spring Boot application for managing purchases and currency conversion.
 
 ## Technology Stack
 
-- Java 17+
-- Spring Boot
+- Java 21
+- Spring Boot 4
 - Spring Web MVC
 - Spring Validation
-- Spring Data JPA (H2 for local/dev)
+- Spring Data JPA (PostgreSQL)
+- PostgreSQL
 - Maven
 - Lombok
 - Jackson (JSON serialization)
@@ -20,30 +21,28 @@ A Spring Boot application for managing purchases and currency conversion.
 - **Service Layer:** Business logic (`PurchaseService`)
 - **DTOs:** Data transfer objects for requests and responses
 - **Validation:** Custom and standard validation for input data
-- **Persistence:** JPA entities and repositories (H2)
+- **Persistence:** JPA entities and repositories (PostgreSQL)
 - **Exception Handling:** Centralized with `RestExceptionHandler`
 
-## Building the Project
+## Prerequisites
 
-To build the project, run:
-mvn clean install
+- Java 21
+- Maven (or use the provided Maven Wrapper: `./mvnw` or `mvnw.cmd`)
+- Docker & Docker Compose
 
-## Running Locally
+## Building the Project with Docker
 
-To start the application locally:
-mvn spring-boot:run
+1. Build the application JAR:
+   mvn clean package
+
+2. Build and start the containers:
+   docker compose up --build
 
 The service will be available at http://localhost:8080
 
-## Running Tests
+To stop and remove containers:
+docker compose down
 
-To execute all unit tests:
-mvn test
-
-## Building Docker Image
-
-To build a Docker image for the application, run:
-mvn spring-boot:build-image
 
 ## PurchaseController API
 
@@ -88,3 +87,16 @@ Response: Returns purchase details with the amount converted to the requested cu
    "targetCurrency": "EUR",
    "transactionDate": "2025-01-25"
    }
+
+## Security Considerations
+
+Security was intentionally left out of this service to keep the example focused and easy to run locally.
+In a real production environment, the REST APIs should be secured. This would typically include:
+
+- Authentication and authorization (for example, using Spring Security with JWT or OAuth2)
+- Restricting access to endpoints based on user roles or permissions
+- Enforcing HTTPS/TLS
+- Proper CORS configuration and request validation
+- Basic protections such as rate limiting and request filtering
+
+These are standard practices for protecting RESTful APIs and would be added before deploying this service to production.

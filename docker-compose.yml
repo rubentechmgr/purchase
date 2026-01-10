@@ -1,0 +1,32 @@
+# yaml
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: purchase_app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/purchase_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: secret_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SERVER_PORT: 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    container_name: purchase_postgres
+    environment:
+      POSTGRES_DB: purchase_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
